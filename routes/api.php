@@ -21,5 +21,6 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('createsubscription', 'Subscription\SubscriptionController@store');
 Route::post('createpayment', 'Subscription\PaymentController@store');
 Route::get('getclockinhistory/{userid}', 'Account\ClockHistoryController@show');
+//Route::options('getclockinhistory/{userid}', 'Account\ClockHistoryController@show');
 //Route::get('getclockinhistory/{userid}', ['middleware' => 'cors','uses' => 'Account\ClockHistoryController@show']);
 

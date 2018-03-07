@@ -15,13 +15,17 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        if($request->server('HTTP_ORIGIN')) {
+        return $next($request)
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
+       /* if($request->server('HTTP_ORIGIN')) {
             $origin = $request->server('HTTP_ORIGIN');
             
-            //$domain = Domain::where("domain", $origin)->get();
-            //
-                header('Access-Control-Allow-Origin: ' . $origin);
-                header('Access-Control-Allow-Headers: Origin, Content-Type, Authorization');
+            header('Access-Control-Allow-Origin:', '*');
+            header('Access-Control-Allow-Methods:', '*');
+            header('Access-Control-Allow-Headers: Origin, Content-Type, Authorization');
+            header('Access-Control-Allow-Credentials:', true);*/
          ///
     }
 }

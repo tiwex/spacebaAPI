@@ -15,6 +15,13 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if($request->server('HTTP_ORIGIN')) {
+            $origin = $request->server('HTTP_ORIGIN');
+            
+            //$domain = Domain::where("domain", $origin)->get();
+            //
+                header('Access-Control-Allow-Origin: ','*');
+                header('Access-Control-Allow-Headers: Origin, Content-Type');
+         ///
     }
 }

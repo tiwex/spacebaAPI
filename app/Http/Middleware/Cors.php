@@ -20,8 +20,8 @@ class Cors
             
             //$domain = Domain::where("domain", $origin)->get();
             //
-                header('Access-Control-Allow-Origin: ','*');
-                header('Access-Control-Allow-Headers: Origin, Content-Type');
+                header('Access-Control-Allow-Origin: ' . $origin);
+                header('Access-Control-Allow-Headers: Origin, Content-Type, Authorization');
          ///
     }
 }

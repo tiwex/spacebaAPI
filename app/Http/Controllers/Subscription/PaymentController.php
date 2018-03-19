@@ -22,7 +22,9 @@ class PaymentController extends Controller
    {
 	 $this->validator($request->all())->validate();
 	 $payment = Payment::create($request->all());
-	 return response()->json($payment,201);
+     return response()->json($payment,201);
+     
+     //update subscription or bookings table 
    }
 
     public function bulk(Request $request)

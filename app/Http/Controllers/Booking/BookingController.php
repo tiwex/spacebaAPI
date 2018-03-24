@@ -27,7 +27,6 @@ class BookingController extends Controller
     //send email based on payment type , if card , card will be billed after confirmation
     // Make payment
     return response()->json($booking,201);
-
   }
   
 }

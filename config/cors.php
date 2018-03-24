@@ -11,12 +11,10 @@ return [
     | to accept any value.
     |
     */
-   
-    'supportsCredentials' => false,
-    'allowedOrigins' => ['http://localhost:8080'],
-    'allowedOriginsPatterns' => [],
-    'allowedHeaders' => ['*'],
-    'allowedMethods' => ['GET', 'POST'],
+   'supportsCredentials' => false,
+    'allowedOrigins' => ['*'],
+    'allowedHeaders' => ['Content-Type', 'X-Requested-With'],
+    'allowedMethods' => ['*'], // ex: ['GET', 'POST', 'PUT',  'DELETE']
     'exposedHeaders' => [],
     'maxAge' => 0,
 

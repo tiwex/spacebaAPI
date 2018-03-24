@@ -22,8 +22,7 @@ class VisitController extends Controller
      //$this->validator($request->all())->validate();
      $visit = Schedule_visit::create($request->all());
      
-     //send email based on payment type , if card , card will be billed after confirmation
-     // Make payment
+     //send email to provider and user when visit is scheduled 
      return response()->json($visit,201);
    }
 }

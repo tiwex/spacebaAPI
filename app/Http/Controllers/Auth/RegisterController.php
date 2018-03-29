@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -69,7 +70,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
     }
 
@@ -77,8 +78,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
        $user = User::create($request->all());
-       $user->password =Hash::make($user->password);
-       $user->save();
+    
       $member=$request->is_member;
       $user1=0;
      if  ($member == 1)
@@ -94,6 +94,7 @@ class RegisterController extends Controller
     
 
        //send welcome and  verficationn email if i can verify email 
-        return response()->json($user, 201);
+        return response()
+        ->json($user, 201);
     }
 }

@@ -19,7 +19,9 @@ $contact = DB::table('clock_in_histories')
             ->select(DB::raw('clock_in_histories.clock_in_time,clock_in_histories.clock_out_time,
             timestampdiff(hour,clock_in_histories.clock_in_time,clock_in_histories.clock_out_time) as hours_used,
             timestampdiff(hour,clock_in_histories.clock_in_time,clock_in_histories.clock_out_time)*spaces.credits_per_hour as credit_used,
-             spaces.credits_per_hour'),DB::raw('(select sp.name from space_providers sp,spaces s where sp.id=s.space_provider_id and s.id=clock_in_histories.space_id) provider'))
+             spaces.credits_per_hour'),
+             DB::raw('(select sp.name from space_providers sp,spaces s where sp.id=s.space_provider_id
+              and s.id=clock_in_histories.space_id) provider'))
             ->get();
 
 return response()->json($contact,200);

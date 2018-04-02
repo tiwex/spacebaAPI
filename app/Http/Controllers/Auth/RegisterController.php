@@ -70,15 +70,16 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => bcrypt($data['password']),
         ]);
     }
 
      public function store(Request $request)
     {
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
        $user = User::create($request->all());
-    
+       $user->password =Hash::make($user->password);
+      $user->save();
       $member=$request->is_member;
       $user1=0;
      if  ($member == 1)

@@ -30,7 +30,7 @@ return response()->json($contact,200);
 $space = DB::table('spaces')
             ->join('locations', 'spaces.id', '=', 'locations.space_id')
            ->where([['spaces.id',$space_id],['spaces.is_active',1]])
-           ->select('spaces.id','spaces.name','spaces.title','spaces.description'
+           ->select('spaces.id','spaces.name','spaces.title','spaces.description','spaces.credits_per_hour'
            ,DB::raw('(select name from states where id=locations.state_id) state')
            ,DB::raw('(select name from cities where id=locations.city_id) city')
            ,DB::raw('(select name from areas where id=locations.area_id) area'))

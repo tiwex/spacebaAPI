@@ -16,17 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('register', 'Auth\RegisterController@store');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('createsubscription', 'Subscription\SubscriptionController@store');
-Route::post('createpayment', 'Subscription\PaymentController@store');
-Route::post('createbooking', 'Booking\BookingController@store');
-Route::post('createvisit', 'Booking\VisitController@store');
-Route::post('createquote', 'Booking\QuoteController@store');
-Route::get('getclockinhistory/{userid}', 'Account\ClockHistoryController@show');
-Route::get('getspace/{space_id}', 'Space\SpaceController@showspace');
-Route::get('getimages/{space_id}', 'Space\SpaceController@showimages');
-Route::get('gettype/{space_id}', 'Space\SpaceController@showtype');
-//Route::options('getclockinhistory/{userid}', 'Account\ClockHistoryController@show');
-//Route::get('getclockinhistory/{userid}', ['middleware' => 'cors','uses' => 'Account\ClockHistoryController@show']);
-
+Route::post('register', ['middleware' => 'crrs','uses'=> 'Auth\RegisterController@store']);
+Route::post('login', ['middleware'=>'crrs','uses'=>'Auth\LoginController@login']);
+Route::post('createsubscription', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@store']);
+Route::post('createpayment', ['middleware'=>'crrs','uses'=>'Subscription\PaymentController@store']);
+Route::post('createbooking', ['middleware'=>'crrs','uses'=>'Booking\BookingController@store']);
+Route::post('createvisit', ['middleware'=>'crrs','uses'=>'Booking\VisitController@store']);
+Route::post('createquote', ['middleware'=>'crrs','uses'=>'Booking\QuoteController@store']);
+Route::get('getspace/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showspace']);
+Route::get('getimages/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showimages']);
+Route::get('gettype/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showtype']);
+Route::get('getclockinhistory/{userid}', ['middleware' => 'crrs','uses' => 'Account\ClockHistoryController@show']);

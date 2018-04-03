@@ -39,6 +39,14 @@ $image = DB::table('space_images')
            ->where('space_id',$space_id)
            ->select('cloudinary_id','is_featured')
            ->get();
+           $c_img=array();
+
+foreach ($image as $value)
+{
+    $url=basename(Cloudder::secureShow($value->cloudinary_id));
+    $featured=$value->is_featured;
+    $c_img[]=array("c_img"=>$url,"is_featured"=>$featured);
+}
  $type = DB::table('space_types')
            ->where('space_id',$space_id)
            ->select(DB::raw('(select name from types where id=space_types.type_id) type'))
@@ -78,7 +86,7 @@ $provider = DB::table('spaces')
               (select count(*) from request_quotes rq where rq.space_id='.$space_id.') leads'))
            ->get();
 $review = array("review"=>5,"rating"=>3);
-$detail=array("space"=>$space,"image"=>$image,"type"=>$type,"category"=>$category,"ammenities"=>$ammenities,
+$detail=array("space"=>$space,"image"=>$c_img,"type"=>$type,"category"=>$category,"ammenities"=>$ammenities,
            "capacities"=>$capacities,"layouts"=>$layouts,
             "prices"=>$price,"provider"=>$provider,"score"=>$review);
           
@@ -91,9 +99,16 @@ $image = DB::table('space_images')
            ->where('space_id',$space_id)
            ->select('cloudinary_id','is_featured')
            ->get();
+$c_img=array();
 
+foreach ($image as $value)
+{
+    $url=basename(Cloudder::secureShow($value->cloudinary_id));
+    $featured=$value->is_featured;
+    $c_img[]=array("c_img"=>$url,"is_featured"=>$featured);
+}
 
-return response()->json($image,200);
+return response()->json($c_img,200);
    }
 public function showtype($space_id)
    {

@@ -8,6 +8,6 @@ class Subscription extends Model
 {
     //
     protected $fillable = [
-        'user_id', 'subscribed_credits','subscription_start','subscription_end','credits_spent','credits_remaining','amount','is_rolled_over','credits_rolled_over','credits_rolled_in','auto_renew','transaction_ref'];
+        'user_id','service_id','payment_id','subscribed_credits','start_date','end_date','amount','is_rolled_over','credits_rolled_over','credits_rolled_in','transaction_ref'];
 }
 

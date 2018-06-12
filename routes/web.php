@@ -14,3 +14,4 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('getspaces', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showspaces']);

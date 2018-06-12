@@ -73,7 +73,14 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-
+  protected function profile(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+    }
      public function store(Request $request)
     {
         //$this->validator($request->all())->validate();

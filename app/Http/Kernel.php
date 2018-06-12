@@ -19,6 +19,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
          \Barryvdh\Cors\HandleCors::class,
+         //\App\Http\Middleware\Cors::class,
+         \Barryvdh\Cors\HandleCors::class,
+     \App\Http\Middleware\Crrs::class,
     ];
 
     /**
@@ -36,6 +39,9 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
+            \Barryvdh\Cors\HandleCors::class,
+           //\App\Http\Middleware\Cors::class,
+            \App\Http\Middleware\Crrs::class,
         ],
 
         'api' => [
@@ -59,5 +65,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'crrs' => \App\Http\Middleware\Crrs::class, 
+        'cors' => \Barryvdh\Cors\HandleCors::class,
     ];
 }

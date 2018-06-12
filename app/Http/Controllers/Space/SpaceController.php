@@ -43,7 +43,7 @@ $image = DB::table('space_images')
 
 foreach ($image as $value)
 {
-    $url=basename(Cloudder::secureShow($value->cloudinary_id));
+    $url=Cloudder::secureShow($value->cloudinary_id,array("width"=>1, "height"=>1, "crop"=>"scale"));
     $featured=$value->is_featured;
     $c_img[]=array("c_img"=>$url,"is_featured"=>$featured);
 }
@@ -103,7 +103,7 @@ $c_img=array();
 
 foreach ($image as $value)
 {
-    $url=basename(Cloudder::secureShow($value->cloudinary_id));
+    $url=Cloudder::secureShow($value->cloudinary_id,array("width"=>300, "height"=>100, "crop"=>"scale"));
     $featured=$value->is_featured;
     $c_img[]=array("c_img"=>$url,"is_featured"=>$featured);
 }
@@ -121,4 +121,98 @@ $type = DB::table('space_types')
 
 return response()->json($type,200);
    }
+   public function shownetworksetting($space_id)
+   {
+//$contact = Article::Find($contact);
+$setting = DB::table('space_network_settings')
+        ->first();
+
+
+return response()->json($setting,200);
+   }
+public function showspaces()
+{
+//$contact = Article::Find($contact);
+$spaces = DB::table('spaces')
+          ->where('spaces.is_active',1)
+          ->whereNotNull('credits_per_hour')
+          ->limit(100)
+         ->get();
+//$space=array();
+    foreach ($spaces as $space)
+    {
+$space1 = DB::table('spaces')
+           ->where('spaces.id',$space->id)
+           ->select('spaces.id','spaces.name','spaces.title','spaces.description','spaces.credits_per_hour')
+          ->get();
+
+$states=DB::table('locations')
+        ->where('locations.space_id',$space->id)
+        ->select('state_id', DB::raw('(select name from states where id=locations.state_id and locations.space_id='.$space->id.') value'))
+        ->get();
+ $areas=DB::table('locations')
+        ->where('locations.space_id',$space->id)
+        ->select('area_id', DB::raw('(select name from areas where id=locations.area_id and locations.space_id='.$space->id.') value'))
+        ->get();
+$cities=DB::table('locations')
+        ->where('locations.space_id',$space->id)
+        ->select('city_id', DB::raw('(select name from areas where id=locations.city_id and locations.space_id='.$space->id.') value'))
+        ->get();
+          
+$image= DB::table('space_images')
+           ->where('space_id',$space->id)
+           ->select('cloudinary_id','is_featured')
+           ->get();
+           $c_img=array();
+
+    foreach ($image as $value)
+    {
+    $url=Cloudder::secureShow($value->cloudinary_id,array("width"=>0.9, "height"=>0.9, "crop"=>"scale"));
+    $featured=$value->is_featured;
+    $c_img[]=array("c_img"=>$url,"is_featured"=>$featured);
+    }
+ $type = DB::table('space_types')
+           ->where('space_id',$space->id)
+           ->select('id',DB::raw('(select name from types where id=space_types.type_id) type'))
+           ->get();
+           
+$category = DB::table('space_categories')
+           ->where('space_id',$space->id)
+           ->select('id',DB::raw('(select name from categories where id=space_categories.category_id) category'))
+           ->get();
+           
+$ammenities = DB::table('space_facilities')
+           ->where('space_id',$space->id)
+           ->select('id','name')
+           ->get();
+           
+$capacities = DB::table('capacities')
+           ->where('space_id',$space->id)
+           ->select('id','capacity')
+           ->get();
+           
+$layouts = DB::table('space_layouts')
+           ->where('space_id',$space->id)
+           ->select('id',DB::raw('(select name from layouts where id=space_layouts.layout_id) layout'),'size')
+           ->get();
+
+ $price = DB::table('prices')
+           ->where('space_id',$space->id)
+           ->select('id','amount','default','min_qty','max_qty','period','is_booking'
+           ,(DB::raw('(select name from price_types where id=prices.type_id) type')))
+           ->get();
+
+   $detail[]=array("space"=>$space1,"state"=>$states,"area"=>$areas,"city"=>$cities,"type"=>$type,"category"=>$category,"ammenities"=>$ammenities,
+           "capacities"=>$capacities,"layouts"=>$layouts,
+            "prices"=>$price,"image"=>$c_img);
+
+    }
+
+    
+
+      
+     // echo json_encode($detail);    
+    return response()->json($detail,200);
+}
+  // return response()->json($detail,200);
 }

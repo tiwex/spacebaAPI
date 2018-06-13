@@ -154,7 +154,18 @@ $subscribe= DB::table('subscriptions')
                 ->where([['user_id',$user_id],['subscriptions.service_id',$service_id]])
                ->latest()
                ->first();
+if (empty($subscribe))
 
+{
+  $name= DB::table('users')
+              ->where('id',$user_id)
+              ->value('name');
+  if(empty($name)) $status ="user doesnt exist";
+    $status="no active subscription";
+  $profile= array("name"=>$name,"status"=>$status);
+}
+else
+{
 $name= DB::table('users')
             ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
               ->where('user_id',$user_id)
@@ -191,8 +202,9 @@ if ($s_valid==true)
   }
 else $balance = ($credit+$credits_rolled_in) - $usage->credit_used ;
 
-//$profile= array("name"=>$name,"subscription"=>$subscribe,"services"=>$services,"usage"=>$usage,"balance"=>$balance);
-$profile=$sdate;
+$profile= array("name"=>$name,"subscription"=>$subscribe,"services"=>$services,"usage"=>$usage,"balance"=>$balance);
+}
+//$profile=$sdate;
 
 return response()->json($profile,200);
    }

@@ -121,7 +121,7 @@ $type = DB::table('space_types')
 
 return response()->json($type,200);
    }
-   public function shownetworksetting($space_id)
+   public function shownetworksetting()
    {
 //$contact = Article::Find($contact);
 $setting = DB::table('space_network_settings')

@@ -222,7 +222,7 @@ return response()->json($history,200);
    public function showbydate($user_id,$start_date,$end_date,$limit)
 {
 //$contact = Article::Find($contact);
-if (empty($start_date) && empty($end_date))
+if ($start_date=="d" && $end_date=="d")
 {
 
 

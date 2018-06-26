@@ -32,7 +32,7 @@ return response()->json($history,200);
     public function showbydate($user_id,$start_date,$end_date,$limit)
    {
 //$contact = Article::Find($contact);
-if (empty($start_date) && empty($end_date))
+if ($start_date=="d" && $end_date=="d")
 {
 $history = DB::table('clock_in_histories')
             ->join('spaces', 'spaces.id', '=', 'clock_in_histories.space_id')
@@ -65,7 +65,7 @@ else
              DB::raw('(select sp.name from space_providers sp,spaces s where sp.id=s.space_provider_id
               and s.id=clock_in_histories.space_id) provider'))
             ->orderBy('clock_in_histories.created_at','desc')
-            ->limit($limit);
+            ->limit($limit)
             ->get();
 }
 return response()->json($history,200);

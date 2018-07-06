@@ -50,7 +50,8 @@ class LoginController extends Controller
             'data' => $user->toArray(),
         ]);
     }
+    else return response()->json(false,200);
 
-    return $this->sendFailedLoginResponse($request);
-    }
+   // return $this->sendFailedLoginResponse($request);
+}
 }

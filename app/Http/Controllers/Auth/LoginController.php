@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -53,5 +54,26 @@ class LoginController extends Controller
     else return response()->json(false,200);
 
    // return $this->sendFailedLoginResponse($request);
+}
+  public function checkcredential(Request $request)
+
+{
+    $email=$request->input('email');
+    $user=User::where('email', $email)->first();
+
+    if (empty($user)) $password = false;
+    else $password=$user->password;
+
+    $password=Hash::check($request->input('password'),$password);
+
+    if (!empty($user) && $password==true)
+    {
+        return response()->json(['data' => $user->toArray(),]);
+    }
+
+    
+    else return response()->json(false,200);
+
+   //return $this->sendFailedLoginResponse($request);
 }
 }

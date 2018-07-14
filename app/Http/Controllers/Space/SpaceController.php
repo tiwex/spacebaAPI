@@ -14,14 +14,14 @@ class SpaceController extends Controller
    {
 //$contact = Article::Find($contact);
 
-$contact = DB::table('contactgroups')
+$spaces = DB::table('contactgroups')
             ->join('groups', 'groups.id', '=', 'contactgroups.group_id')
             ->join('contacts', 'contacts.id', '=', 'contactgroups.contact_id')
             ->where([['groups.id',$groupid],['groups.user_id',$user_id]])
             ->select('contacts.*','groups.id as group_id', 'groups.name as group_name','groups.description as group_description')
             ->get();
 
-return response()->json($contact,200);
+return response()->json($spaces,200);
    }
 
    public function showspace($space_id)
@@ -43,7 +43,7 @@ $image = DB::table('space_images')
 
 foreach ($image as $value)
 {
-    $url=Cloudder::secureShow($value->cloudinary_id,array("width"=>1, "height"=>1, "crop"=>"scale"));
+    $url=Cloudder::secureShow($value->cloudinary_id,array("width"=>0.9, "height"=>0.9, "crop"=>"scale"));
     $featured=$value->is_featured;
     $c_img[]=array("c_img"=>$url,"is_featured"=>$featured);
 }

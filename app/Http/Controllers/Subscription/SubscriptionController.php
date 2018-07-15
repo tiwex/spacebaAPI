@@ -252,5 +252,15 @@ $history= DB::table('subscriptions')
   }
 return response()->json($history,200);
    }
+ public function showservices()
+{
+//$contact = Article::Find($contact);
 
+$service= DB::table('services')
+              ->select('*')
+              ->get();
+
+ 
+return response()->json($service,200);
+   }
 }

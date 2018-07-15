@@ -26,6 +26,7 @@ Route::post('createvisit', ['middleware'=>'crrs','uses'=>'Booking\VisitControlle
 Route::post('createquote', ['middleware'=>'crrs','uses'=>'Booking\QuoteController@store']);
 Route::get('getspace/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showspace']);
 Route::get('getspaces', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showspaces']);
+Route::get('getservices', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@showservices']);
 Route::get('getimages/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showimages']);
 Route::get('gettype/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showtype']);
 Route::get('getnetworksetting', ['middleware'=>'crrs','uses'=>'Space\SpaceController@shownetworksetting']);

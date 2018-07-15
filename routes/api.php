@@ -36,7 +36,8 @@ Route::get('getsubscriptions/{user_id}', ['middleware'=>'crrs','uses'=>'Subscrip
 Route::get('getsubscriptionsbydate/{userid}/{start_date}/{end_date}/{limit}', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@showbydate']);
 Route::group(['middleware' => ['cors']], function () {
     Route::post('register', 'Auth\RegisterController@store');
-    //Route::post('login', 'Auth\LoginController@login');
-    Route::post('login', 'Auth\LoginController@checkcredential');
+    Route::post('login', 'Auth\LoginController@login');
+    //Route::post('login', 'Auth\LoginController@checkcredential');
+    Route::post('check', 'Auth\LoginController@checkcredential');
     Route::post('createpayment', 'Subscription\PaymentController@store');
 });

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Mail\HoraSignup;
+use App\Mail\Welcome;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 
 class RegisterController extends Controller
@@ -53,8 +56,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:user',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -83,21 +85,29 @@ class RegisterController extends Controller
     }
      public function store(Request $request)
     {
-        //$this->validator($request->all())->validate();
-       $user = User::create($request->all());
+        $this->validator($request->all())->validate();
+        $array=array("name"=>$request->input('name'),"email"=>$request->input('email'),"phone"=>$request->input('phone'),"password"=>$request->input('password'),"is_subscriber"=>$request->input('is_member'));
+       //$user = User::create($request->all());
+        $user = User::create($array);
        $user->password =Hash::make($user->password);
       $user->save();
-      $member=$request->is_member;
+      $member=$request->input('is_member');
+
       $user1=0;
-     if  ($member == 1)
+       Mail::to($user)->send(new Welcome);
+    /*if  ($member == 1)
    {
-       $user1 = User::find($user->id);
+       $user1 = User::findorfail($user->id);
 
          $user1->is_member = $member;
         
          $user1->save();
-    //     //send welcome email if save is successfu.
-    }
+      
+
+        // Ship order...
+
+       
+    }*/
        
     
 

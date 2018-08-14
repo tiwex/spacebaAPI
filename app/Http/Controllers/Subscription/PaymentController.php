@@ -24,7 +24,7 @@ class PaymentController extends Controller
 	 $payment = Payment::create($request->all());
      return response()->json($payment,201);
      
-     //update subscription or bookings table 
+     //send an email after payment
    }
 
    

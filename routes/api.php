@@ -19,7 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::post('register', ['middleware' => 'crrs','uses'=> 'Auth\RegisterController@store']);
 //Route::post('login', ['middleware'=>'crrs','uses'=>'Auth\LoginController@login']);
 //Route::post('login', 'Auth\LoginController@login')->middleware('crrs');
-Route::post('createsubscription', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@store']);
+ Route::post('createsubscription', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@store']);
+//Route::post('createsubscription', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@testservices']);
 //Route::post('createpayment', ['middleware'=>'crrs','uses'=>'Subscription\PaymentController@store']);
 Route::post('createbooking', ['middleware'=>'crrs','uses'=>'Booking\BookingController@store']);
 Route::post('createvisit', ['middleware'=>'crrs','uses'=>'Booking\VisitController@store']);

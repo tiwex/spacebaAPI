@@ -64,7 +64,7 @@ class LoginController extends Controller
     if (empty($user)) $password = false;
     else $password=$user->password;
 
-    $password=Hash::check($request->input('password'),$password);
+    $password=Hash::check($request->input('password'),$user->password);
 
     if (!empty($user) && $password==true)
     {

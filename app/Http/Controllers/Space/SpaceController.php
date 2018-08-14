@@ -27,15 +27,28 @@ return response()->json($spaces,200);
    public function showspace($space_id)
    {
 //$contact = Article::Find($contact);
-$space = DB::table('spaces')
+/*$space = DB::table('space')
             ->join('locations', 'spaces.id', '=', 'locations.space_id')
            ->where([['spaces.id',$space_id],['spaces.is_active',1]])
            ->select('spaces.id','spaces.name','spaces.title','spaces.description','spaces.credits_per_hour'
            ,DB::raw('(select name from states where id=locations.state_id) state')
            ,DB::raw('(select name from cities where id=locations.city_id) city')
            ,DB::raw('(select name from areas where id=locations.area_id) area'))
+           ->get();*/
+           
+
+           $space = DB::table('space')
+                    ->join('merchantspace', 'space.id', '=', 'merchantspace.space_id')
+                    ->join('merchant_settings', 'merchantspace.merchant_id', '=', 'merchant_settings.merchant_id')
+                    ->where('space.id',$space_id)
+                    ->select('space.id','space.name','space.title','space.description','merchant_settings.credits_per_hour'
+                ,DB::raw('(select s.name from location_lga l,states s  where l.id=space.lga_id and l.state_id=s.id ) state')
+           ,DB::raw('(select name from location_lga  where id=space.lga_id) city')
+           ,DB::raw('(select name from location_area  where id=space.area_id) area'))
            ->get();
-$image = DB::table('space_images')
+
+
+$image = DB::table('spaceimage')
            ->where('space_id',$space_id)
            ->select('cloudinary_id','is_featured')
            ->get();
@@ -52,22 +65,22 @@ foreach ($image as $value)
            ->select(DB::raw('(select name from types where id=space_types.type_id) type'))
            ->get();
            
-$category = DB::table('space_categories')
+$category = DB::table('spacecategory')
            ->where('space_id',$space_id)
-           ->select(DB::raw('(select name from categories where id=space_categories.category_id) category'))
+           ->select(DB::raw('(select name from spacecategorylist where id=spacecategory.space_category_list_id) category'))
            ->get();
            
-$ammenities = DB::table('space_facilities')
+$ammenities = DB::table('spaceitem')
            ->where('space_id',$space_id)
-           ->select('name')
+           ->select(DB::raw('(select name from spaceitemlist where id=spaceitem.space_item_list_id) facility'))
            ->get();
            
-$capacities = DB::table('capacities')
+$capacities = DB::table('spacesettings')
            ->where('space_id',$space_id)
            ->select('capacity')
            ->get();
            
-$layouts = DB::table('space_layouts')
+/*$layouts = DB::table('space_layouts')
            ->where('space_id',$space_id)
            ->select(DB::raw('(select name from layouts where id=space_layouts.layout_id) layout'),'size')
            ->get();
@@ -84,18 +97,24 @@ $provider = DB::table('spaces')
               DB::raw('(select count(*) from bookings where bookings.space_id='.$space_id.') +
               (select count(*) from schedule_visits s where s.space_id='.$space_id.') +
               (select count(*) from request_quotes rq where rq.space_id='.$space_id.') leads'))
+           ->get();*/
+  $provider = DB::table('merchant')
+            ->join('merchantspace', 'merchant.id', '=', 'merchantspace.merchant_id')
+             ->join('merchant_settings', 'merchantspace.merchant_id', '=', 'merchant_settings.merchant_id')
+           ->where('merchantspace.space_id',$space_id)
+           ->select('merchant.name','merchant.address','merchant.phone','merchant.email')
            ->get();
-$review = array("review"=>5,"rating"=>3);
+
+//$review = array("review"=>5,"rating"=>3);
 $detail=array("space"=>$space,"image"=>$c_img,"type"=>$type,"category"=>$category,"ammenities"=>$ammenities,
-           "capacities"=>$capacities,"layouts"=>$layouts,
-            "prices"=>$price,"provider"=>$provider,"score"=>$review);
+           "capacities"=>$capacities,"provider"=>$provider);
           
 return response()->json($detail,200);
    }
    public function showimages($space_id)
    {
 //$contact = Article::Find($contact);
-$image = DB::table('space_images')
+$image = DB::table('spaceimage')
            ->where('space_id',$space_id)
            ->select('cloudinary_id','is_featured')
            ->get();

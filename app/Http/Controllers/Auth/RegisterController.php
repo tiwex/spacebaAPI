@@ -94,7 +94,7 @@ class RegisterController extends Controller
       $member=$request->input('is_member');
 
       $user1=0;
-       Mail::to($user)->send(new Welcome);
+      // Mail::to($user)->send(new Welcome);
     /*if  ($member == 1)
    {
        $user1 = User::findorfail($user->id);
@@ -112,7 +112,6 @@ class RegisterController extends Controller
     
 
        //send welcome and  verficationn email if i can verify email 
-        return response()
-        ->json($user, 201);
+        return response()->json($user, 201);
     }
 }

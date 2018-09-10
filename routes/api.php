@@ -25,6 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('createbooking', ['middleware'=>'crrs','uses'=>'Booking\BookingController@store']);
 Route::post('createvisit', ['middleware'=>'crrs','uses'=>'Booking\VisitController@store']);
 Route::post('createquote', ['middleware'=>'crrs','uses'=>'Booking\QuoteController@store']);
+ Route::post('check', ['middleware'=>'crrs','uses'=>'Auth\LoginController@checkcredential']);
 Route::get('getspace/{space_id}', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showspace']);
 Route::get('getspaces', ['middleware'=>'crrs','uses'=>'Space\SpaceController@showspaces']);
 Route::get('getservices', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@showservices']);
@@ -40,6 +41,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('register', 'Auth\RegisterController@store');
     Route::post('login', 'Auth\LoginController@login');
     //Route::post('login', 'Auth\LoginController@checkcredential');
-    Route::post('check', 'Auth\LoginController@checkcredential');
+    //Route::post('check', 'Auth\LoginController@checkcredential');
     Route::post('createpayment', 'Subscription\PaymentController@store');
 });

@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//Route::post('register', ['middleware' => 'crrs','uses'=> 'Auth\RegisterController@store']);
+Route::post('register', ['middleware' => 'crrs','uses'=> 'Auth\RegisterController@store']);
 //Route::post('login', ['middleware'=>'crrs','uses'=>'Auth\LoginController@login']);
 //Route::post('login', 'Auth\LoginController@login')->middleware('crrs');
  Route::post('createsubscription', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@store']);
@@ -38,7 +38,7 @@ Route::get('getprofile/{user_id}', ['middleware'=>'crrs','uses'=>'Subscription\S
 Route::get('getsubscriptions/{user_id}', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@show']);
 Route::get('getsubscriptionsbydate/{userid}/{start_date}/{end_date}/{limit}', ['middleware'=>'crrs','uses'=>'Subscription\SubscriptionController@showbydate']);
 Route::group(['middleware' => ['cors']], function () {
-    Route::post('register', 'Auth\RegisterController@store');
+    //Route::post('register', 'Auth\RegisterController@store');
     Route::post('login', 'Auth\LoginController@login');
     //Route::post('login', 'Auth\LoginController@checkcredential');
     //Route::post('check', 'Auth\LoginController@checkcredential');

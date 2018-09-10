@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -86,14 +86,14 @@ class RegisterController extends Controller
      public function store(Request $request)
     {
         $this->validator($request->all())->validate();
-        $array=array("name"=>$request->input('name'),"email"=>$request->input('email'),"phone"=>$request->input('phone'),"password"=>$request->input('password'),"is_subscriber"=>$request->input('is_member'));
+        $array=array("name"=>$request->input('name'),"email"=>$request->input('email'),"phone"=>$request->input('phone'),"password"=>$request->input('password'),"is_subscriber"=>$request->input('is_member'),"ts"=>Carbon::today());
        //$user = User::create($request->all());
         $user = User::create($array);
        $user->password =Hash::make($user->password);
       $user->save();
-      $member=$request->input('is_member');
+      //$member=$request->input('is_member');
 
-      $user1=0;
+     // $user1=0;
       // Mail::to($user)->send(new Welcome);
     /*if  ($member == 1)
    {

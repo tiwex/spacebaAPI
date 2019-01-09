@@ -250,11 +250,11 @@ $spaces = DB::table('space')
                     ->join('merchant_settings', 'merchantspace.merchant_id', '=', 'merchant_settings.merchant_id')
                     ->where('space.id',$sp->id)
                     ->select('space.id','space.name','space.title','space.description','merchant_settings.credits_per_hour'
-                ,DB::raw('(select s.name from location_lga l,states s  where l.id=space.lga_id and l.state_id=s.id ) state')
+                ,DB::raw('(select s.name from location_lga l,location_state s  where l.id=space.lga_id and l.state_id=s.id ) state')
            ,DB::raw('(select name from location_lga  where id=space.lga_id) city')
            ,DB::raw('(select name from location_area  where id=space.area_id) area'))
            ->get();
-//$c_img=1;
+//fdv$c_img=1;
 
 $image = DB::table('spaceimage')
            ->where('space_id',$sp->id)

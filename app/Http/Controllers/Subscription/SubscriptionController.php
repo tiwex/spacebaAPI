@@ -181,7 +181,7 @@ $c_services= DB::table('services')
 
     $service_id = DB::table('services')->where('code','hora')->value('id');
   
-$subscribe= DB::table('subscriptio'n)
+$subscribe= DB::table('subscription')
                 ->where([['user_id',$user_id],['subscription.service_id',$service_id]])
                ->orderBy('create_time','desc')
                ->first();
